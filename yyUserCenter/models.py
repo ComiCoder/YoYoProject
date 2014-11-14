@@ -58,6 +58,6 @@ class YYAccountInfo(models.Model):
         return self.password == password
     
     class Meta:
-        db_table = 'yy-account_info'
+        db_table = 'yy_account_info'
     
     

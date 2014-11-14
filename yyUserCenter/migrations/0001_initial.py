@@ -28,10 +28,12 @@ class Migration(migrations.Migration):
                 ('regProvince', models.SmallIntegerField(null=True)),
                 ('regCity', models.SmallIntegerField(null=True)),
                 ('authValue', models.SmallIntegerField(default=0)),
+                ('authWeiboID', models.CharField(max_length=20, null=True)),
                 ('createTime', models.DateTimeField(auto_now_add=True)),
                 ('updateTime', models.DateTimeField(auto_now=True)),
             ],
             options={
+                'db_table': 'yy_account_info',
             },
             bases=(models.Model,),
         ),

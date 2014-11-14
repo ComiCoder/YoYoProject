@@ -1,13 +1,19 @@
-from django.shortcuts import render
-
-from weibo import APIClient
-from rest_framework import status
 from django.http.response import HttpResponse, HttpResponseRedirect
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from weibo import APIClient
+
 from YoYoProject import customSettings
-from yyUserCenter.models import YYAccountInfo
-from django.contrib.auth import authenticate
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
-from yyUserCenter.auth import login
+from yyUserCenter.auth import yyLogin, yyAuthenticateByID,\
+    yyGetUserByPhone, yyIsPasswordEquas, yyIsWrongUser, yyHasLogin,\
+    yySessionHasKey
+from yyUserCenter.models import YYAccountInfo
+from yyUserCenter.serializers import YYUserInfoSerializer
+
+
+
 
 APP_KEY = '3920803036' # app key  
 APP_SECRET = 'c9bc705bf2bbf8335d3b6f6157f49f15' # app secret  
@@ -41,44 +47,120 @@ def weibo_callback(request):
     
     code = request.GET['code']
     
-    #test 
-    #code = RYU_CLIENT_ID
-    
-    
     weiboToken = client.request_access_token(code, redirect_uri=REDIRECT_URL)
     user = lookUserBySinaID(weiboToken.uid)
     if user:
-        user = authenticate(user.pk)
+        user = yyAuthenticateByID(user.pk)
         
-        if login(request,user) == True:
+        if yyLogin(request,user) == True:
      
             request.session[WEIBO_AUTH_TOKEN] = weiboToken
+            userInfoSerializer = YYUserInfoSerializer(user)
+            return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
             
     return HttpResponse("Failed to Logon",status=status.HTTP_401_UNAUTHORIZED)
 
 
-
-
-'''
-def weibo_login(request):
+@api_view(['POST'])
+def login(request):
+    #first check if the user has been logged already
+    if not request.POST.get('phoneNum'):
+        return HttpResponse("No PhoneNum",status=status.HTTP_400_BAD_REQUEST)
     
-    api = APIClient(APP_KEY, MY_APP_SECRET, redirect_uri=REDIRECT_URL)  
-    client_id = 0
-    try:
-        
-        authorize_url = api.get_authorize_url()
-        
-        print(authorize_url)
-        
-        client_id_idx = authorize_url.index("client_id=")
-        #get the client id
-        client_id = authorize_url[client_id_idx:]
-    except:
-        return HttpResponse("Failed to get client_id", status=status.HTTP_400_BAD_REQUEST)
+    if not request.POST.get('password'):
+        return HttpResponse("No password",status=status.HTTP_400_BAD_REQUEST)
     
-    if client_id != 0:
+    phoneNum = request.POST.get('phoneNum')
+    password = request.POST.get('password')
+    
+    user = yyGetUserByPhone(phoneNum)
+    if user == None:
+        return HttpResponse("No This User",status=status.HTTP_401_UNAUTHORIZED)
+    
+    if yyIsWrongUser(request, user):
+        return HttpResponse("Another User has Logged on in this session",status=status.HTTP_401_UNAUTHORIZED)
+    
+    if yyHasLogin(request, user):
+        return HttpResponse("This user had logged on already",status=status.HTTP_100_CONTINUE)
+    
+    
+    if yyIsPasswordEquas(user, password) == True:
+        yyLogin(request, user)
+        userInfoSerializer = YYUserInfoSerializer(user)
+        return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
         
+    else:
+        return HttpResponse("Password Error",status=status.HTTP_401_UNAUTHORIZED)
+    
+@api_view(['GET'])      
+def logout(request):
+    sessionUserID = request.session.get(customSettings.USER_SESSION_KEY)
+    
+    if sessionUserID == None:
+        return HttpResponse(content='Not Logon', status=status.HTTP_401_UNAUTHORIZED)
+    
+    tempUserInfo= queryUserByID(sessionUserID)
+    if tempUserInfo==None:
+        return HttpResponse(content='User not found', status=status.HTTP_401_UNAUTHORIZED)
+    request.session.pop('user_id')
     return HttpResponse(status=status.HTTP_200_OK)
+
+@api_view(['POST'])       
+def register(request):  
+    #first check if the user has been logged already
+    if not request.POST.get('phoneNum'):
+        return HttpResponse("No PhoneNum",status=status.HTTP_400_BAD_REQUEST)
     
-    '''
+    if not request.POST.get('password'):
+        return HttpResponse("No password",status=status.HTTP_400_BAD_REQUEST)
+    
+    phoneNum = request.POST.get('phoneNum')
+    password = request.POST.get('password')
+    
+    userInfoSet = queryUserByPhone(phoneNum)
+    if userInfoSet == None or userInfoSet.count()==0:
+        userInfo = YYAccountInfo()
+        userInfo.phoneNum = phoneNum
+        userInfo.password = password
+        userInfo.save()
+        
+        userInfoSerializer = YYUserInfoSerializer(userInfo)
+        return Response(userInfoSerializer.data,status=status.HTTP_201_CREATED)
+    else:
+        return Response(userInfoSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def update_icon_image(request):
+    if yySessionHasKey(request):
+        return False
+    
+    if request.FILES['userIcons'] ==None:
+        return HttpResponse(content="no image upload", status=status.HTTP_400_BAD_REQUEST)
+    
+    tempUserInfo= queryUserByID(request.session[customSettings.USER_SESSION_KEY])
+    if tempUserInfo==None:
+        return HttpResponse(content='User not found', status=status.HTTP_401_UNAUTHORIZED)
+    
+    tempUserInfo.largeIconURL = request.FILES['userIcons']
+    tempUserInfo.save()
+    
+    userInfoSerializer = YYUserInfoSerializer(tempUserInfo)
+    return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
+
+    
+def queryUserByPhone(phoneNum):
+    userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)
+    if userInfoSet == None or userInfoSet.count() == 0:
+        return None
+    else:
+        return userInfoSet[0]  
+
+def queryUserByID(userID):
+    userInfo =  YYAccountInfo.objects.get(pk=userID)
+    if userInfo == None:
+        return None
+    else:
+        return userInfo
+
     

@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     
     'rest_framework',
     'yyUserCenter',
+    'yyStaffManager',
+    'yyImgManager',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,9 +1,36 @@
 from django.contrib.auth import authenticate, login
-from yyUserCenter.models import YYAccountInfo
+
 from YoYoProject.customSettings import USER_SESSION_KEY
+from yyUserCenter.models import YYAccountInfo
 
 
-def login(request, user):
+def yySessionHasKey(request):
+    sessionUserID = request.session.get(USER_SESSION_KEY)
+    
+    if sessionUserID == None:
+        return False
+    
+    return True
+
+def yyHasLogin(request, user):
+    if USER_SESSION_KEY in request.session:
+        userID = request.session[USER_SESSION_KEY]
+        
+        if userID == user.pk:
+            return True
+        else:
+            return False
+    else:
+        return False
+    
+def yyIsWrongUser(request, user):
+    if USER_SESSION_KEY in request.session:
+        userID = request.session[USER_SESSION_KEY]
+        if userID != user.pk:
+            return True
+    return False
+
+def yyLogin(request, user):
     if user==None:
         return False
     
@@ -18,6 +45,35 @@ def login(request, user):
         request.session.cycle_key()
     request.session[USER_SESSION_KEY] = user.pk
     return True
+
+def yyAuthenticateByID(user_id, password):
+    try:
+        user = YYAccountInfo.objects.get(pk=user_id)
+    except YYAccountInfo.DoesNotExist:
+        pass
+    else:
+        if user.check_password(password):
+            return user
+    return None
+
+def yyGetUserByPhone(phoneNum):
+    try:
+        user = YYAccountInfo.objects.get(phoneNum=phoneNum)
+        return user
+    except YYAccountInfo.DoesNotExist:
+        pass
+    return None
+
+def yyIsPasswordEquas(user, enterPwd):
+    if user == None:
+        return False
+    
+    if enterPwd==user.passsword:
+        return True
+    
+    return False
+
+    
     
 
 class YYCustomBackend:
