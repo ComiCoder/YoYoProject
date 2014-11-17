@@ -8,7 +8,7 @@ from YoYoProject import customSettings
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
 from yyUserCenter.auth import yyLogin, yyAuthenticateByID,\
     yyGetUserByPhone, yyIsPasswordEquas, yyIsWrongUser, yyHasLogin,\
-    yySessionHasKey
+    yySessionHasKey, yyGetUserByID
 from yyUserCenter.models import YYAccountInfo
 from yyUserCenter.serializers import YYUserInfoSerializer
 
@@ -99,7 +99,7 @@ def logout(request):
     if sessionUserID == None:
         return HttpResponse(content='Not Logon', status=status.HTTP_401_UNAUTHORIZED)
     
-    tempUserInfo= queryUserByID(sessionUserID)
+    tempUserInfo= yyGetUserByID(sessionUserID)
     if tempUserInfo==None:
         return HttpResponse(content='User not found', status=status.HTTP_401_UNAUTHORIZED)
     request.session.pop('user_id')
@@ -138,7 +138,7 @@ def update_icon_image(request):
     if request.FILES['userIcons'] ==None:
         return HttpResponse(content="no image upload", status=status.HTTP_400_BAD_REQUEST)
     
-    tempUserInfo= queryUserByID(request.session[customSettings.USER_SESSION_KEY])
+    tempUserInfo= yyGetUserByID(request.session[customSettings.USER_SESSION_KEY])
     if tempUserInfo==None:
         return HttpResponse(content='User not found', status=status.HTTP_401_UNAUTHORIZED)
     
@@ -148,6 +148,8 @@ def update_icon_image(request):
     userInfoSerializer = YYUserInfoSerializer(tempUserInfo)
     return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
 
+
+
     
 def queryUserByPhone(phoneNum):
     userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)
@@ -156,11 +158,7 @@ def queryUserByPhone(phoneNum):
     else:
         return userInfoSet[0]  
 
-def queryUserByID(userID):
-    userInfo =  YYAccountInfo.objects.get(pk=userID)
-    if userInfo == None:
-        return None
-    else:
-        return userInfo
+
+
 
     
