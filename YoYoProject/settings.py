@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'yyUserCenter',
     'yyStaffManager',
     'yyImgManager',
+    'yyFriendshipManager',
 )
 
 MIDDLEWARE_CLASSES = (

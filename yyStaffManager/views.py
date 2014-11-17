@@ -1,23 +1,22 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
-from rest_framework import status
-
-from django import forms
-from django.http.response import HttpResponse
-from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
-from yoyoUtil import yoyoUtil
-from YoYoProject.customSettings import USER_SESSION_KEY
 from PIL import Image
-from yyStaffManager.models import YYStaffInfo, YYPostInfo
-
-from django.db import transaction
-from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
+from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.db import transaction
+from django.http.response import HttpResponse
+from django.shortcuts import render
+from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PaginationSerializer
 from rest_framework.response import Response
+
+from YoYoProject.customSettings import USER_SESSION_KEY
+from yoyoUtil import yoyoUtil
+from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
+from yyStaffManager.models import YYStaffInfo, YYPostInfo
 from yyStaffManager.serializers import YYPaginatedStaffInfoSerializer
-    
+from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
+
+
 class PostStaffForm(forms.Form):
     dealType = forms.IntegerField(max_value=10,required=True)
     staffDesc = forms.CharField(max_length=300,required=True)
