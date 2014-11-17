@@ -4,6 +4,19 @@ from YoYoProject.customSettings import USER_SESSION_KEY
 from yyUserCenter.models import YYAccountInfo
 
 
+def yyGetUserFromRequest(request):
+    if yySessionHasKey(request):
+        sessionUserID = request.session.get(USER_SESSION_KEY)
+        user = YYAccountInfo.objects.get(pk = sessionUserID)
+        if user:
+            return user
+    return None
+        
+def yyGetUserByID(userID):
+    user = YYAccountInfo.objects.get(pk = userID)
+    return user
+
+
 def yySessionHasKey(request):
     sessionUserID = request.session.get(USER_SESSION_KEY)
     
@@ -68,7 +81,7 @@ def yyIsPasswordEquas(user, enterPwd):
     if user == None:
         return False
     
-    if enterPwd==user.passsword:
+    if enterPwd==user.password:
         return True
     
     return False

@@ -118,7 +118,7 @@ def register(request):
     password = request.POST.get('password')
     
     userInfoSet = queryUserByPhone(phoneNum)
-    if userInfoSet == None or userInfoSet.count()==0:
+    if userInfoSet == None:
         userInfo = YYAccountInfo()
         userInfo.phoneNum = phoneNum
         userInfo.password = password
