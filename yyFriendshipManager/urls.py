@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'YouYongProject.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    #url(r'^weibo_login/$', views., name='weibo_login'),
+    url(r'^create/$', views.create, name='create'),
+    url(r'^destroy/$', views.destroy, name='destroy'),
 )

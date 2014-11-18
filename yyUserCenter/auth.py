@@ -13,8 +13,11 @@ def yyGetUserFromRequest(request):
     return None
         
 def yyGetUserByID(userID):
-    user = YYAccountInfo.objects.get(pk = userID)
-    return user
+    try:
+        user = YYAccountInfo.objects.get(pk = userID)
+        return user
+    except YYAccountInfo.DoesNotExist:
+        return None
 
 
 def yySessionHasKey(request):

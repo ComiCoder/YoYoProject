@@ -6,7 +6,6 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.pagination import PaginationSerializer
 from rest_framework.response import Response
 
 from YoYoProject.customSettings import USER_SESSION_KEY
