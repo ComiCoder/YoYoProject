@@ -90,4 +90,6 @@ def destroy(request):
             return Response(userSerializer.data, status=status.HTTP_200_OK)
         
     return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+
+
     

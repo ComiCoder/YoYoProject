@@ -9,11 +9,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from YoYoProject.customSettings import USER_SESSION_KEY
+from YoYoProject.errorResponse import ErrorResponse
 from yoyoUtil import yoyoUtil
+from yyFriendshipManager.models import YYFriendShipInfo
 from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
 from yyStaffManager.models import YYStaffInfo, YYPostInfo
 from yyStaffManager.serializers import YYPaginatedStaffInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
+from yoyoUtil import yyErrorUtil
 
 
 class PostStaffForm(forms.Form):
@@ -30,6 +33,14 @@ class ViewUserStaffForm(forms.Form):
     userID = forms.CharField(max_length=20, required=True)
     pageIndex = forms.IntegerField(min_value=1, max_value=200,required=True)
     pageCount = forms.IntegerField(min_value=20, max_value=100,required=True)
+    
+    
+class PostTimeLineForm(forms.Form):
+    sincePostID = forms.CharField(max_length=20,required=False)
+    maxPostID = forms.CharField(max_length=20,required=False)
+    pageIndex = forms.IntegerField(min_value=1, max_value=200,required=True)
+    pageCount = forms.IntegerField(min_value=20, max_value=100,required=True)
+
     
 def handleUploadFiles(request):
     
@@ -163,6 +174,35 @@ def viewStaff(request):
     else:
         return HttpResponse("Format Error",status=status.HTTP_400_BAD_REQUEST)
     
+ 
+@api_view(['GET'])   
+def postTimeLine(request):
+    user =  yyGetUserFromRequest(request)
+    if user == None:
+        return HttpResponse(status.HTTP_401_UNAUTHORIZED)
     
+    postTimeLineForm = PostTimeLineForm(request.GET)
     
+    if postTimeLineForm.is_valid():
+        sincePostID = postTimeLineForm.cleaned_data['sincePostID']
+        if sincePostID == None:
+            sincePostID = 0
+            
+        maxPostID = postTimeLineForm.cleaned_data['maxPostID']
+        if maxPostID == None:
+            maxPostID = 0
+            
+        pageCount = postTimeLineForm.cleaned_data['pageCount']
+        pageIndex = postTimeLineForm.cleaned_data['pageIndex']
+        
+        if sincePostID > 0:
+            
+            try:
+                allPostInfoList  = YYFriendShipInfo.objects.filter(fromUser__pk=user.pk).select_related('toUser').prefetch_related('yy_post_info').get(pk__gt=sincePostID)
+            except YYFriendShipInfo.DoesNotExist:
+                #return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
+                return HttpResponse("No Result",status=status.HTTP_200_OK)
+            if allPostInfoList==None:
+                return HttpResponse("No Result",status=status.HTTP_200_OK)
+            
     

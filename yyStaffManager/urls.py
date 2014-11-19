@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^postStaff/$', views.postStaff, name='postStaff'),
     url(r'^viewStaff/$', views.viewStaff, name='viewStaff'),
+    url(r'^postTimeLine/$',views.postTimeLine, name='postTimeLine'),
     
     
     

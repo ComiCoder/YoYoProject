@@ -29,4 +29,15 @@
 	
     <input type="submit" name="submit" value="viewStaff" />
 </form>
+
+
+<p>查看好友post</p>
+<form action="http://127.0.0.1:8000/staff/postTimeLine" method="get" enctype="multipart/form-data">
+    sincePostID: <input type="text" name="sincePostID"/>
+	maxPostID: <input type="text" name="maxPostID"/>
+	pageIndex: <input type="text" name="pageIndex"/>
+	<input type="hidden" name="pageCount" value="20"/>
+	
+    <input type="submit" name="submit" value="viewStaff" />
+</form>
 </html>
