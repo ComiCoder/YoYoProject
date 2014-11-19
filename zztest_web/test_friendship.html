@@ -1,0 +1,18 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<p>Create Friendship</p>
+<form action="http://127.0.0.1:8000/friendship/create/" method="post" enctype="multipart/form-data">
+    userID: <input type="text" name="userID"/>
+	<input type="submit" name="submit" value="关注用户" />
+</form>
+
+<p>Destroy User Staff</p>
+<form action="http://127.0.0.1:8000/friendship/destroy/" method="get" enctype="multipart/form-data">
+    userID: <input type="text" name="userID"/>
+	<input type="submit" name="submit" value="撤销好友关系" />
+</form>
+</html>

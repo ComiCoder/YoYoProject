@@ -6,3 +6,11 @@ def isFocusAlready(fromUserID, toUserID):
         return False
     else:
         return True
+    
+def getFriendShip(fromUserID, toUserID):
+    q = YYFriendShipInfo.objects.filter(fromUser__pk =fromUserID, toUser__pk = toUserID)
+    
+    if q==None or q.count()==0:
+        return None
+    else:
+        return q[0]

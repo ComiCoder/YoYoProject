@@ -10,10 +10,11 @@ from yyFriendshipManager.serializers import YYFriendshipInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
 from yoyoUtil import yyErrorUtil
 from YoYoProject.errorResponse import ErrorResponse
+from yyUserCenter.serializers import YYUserInfoSerializer
 
 
 # Create your views here.
-class CreateFriendshipForm(forms.Form):
+class FriendshipForm(forms.Form):
     userID = forms.CharField(max_length=20,required=True)
     
 
@@ -26,7 +27,7 @@ def create(request):
         return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
     
     
-    createFriendshipForm = CreateFriendshipForm(request.POST)
+    createFriendshipForm = FriendshipForm(request.POST)
     
     if createFriendshipForm.is_valid():
         
@@ -34,7 +35,7 @@ def create(request):
         toUserID = createFriendshipForm.cleaned_data['userID']
         
         if fromUserID == toUserID:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20004)
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
             
         
         toUser = yyGetUserByID(int(toUserID))
@@ -56,9 +57,37 @@ def create(request):
         return Response(serializer.data,status=status.HTTP_200_OK)
         
     else:
-        return HttpResponse("format Error",status=status.HTTP_400_BAD_REQUEST)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
     
 @api_view(['POST'])
 def destroy(request):
-    return None
+    
+    fromUser =  yyGetUserFromRequest(request)
+    
+    if fromUser == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
+    createFriendshipForm = FriendshipForm(request.POST)
+    
+    if createFriendshipForm.is_valid():
+        fromUserID = fromUser.pk
+        toUserID = createFriendshipForm.cleaned_data['userID']
+        
+        if fromUserID == toUserID:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
+    
+        toUser = yyGetUserByID(int(toUserID))
+        
+        if toUser==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003)
+        
+        
+        friendShip = friendshipSvc.getFriendShip(fromUserID, toUserID)
+        if friendShip == None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20007_CANT_UNFOCUS_STRANGER)
+        else:
+            friendShip.delete()
+            userSerializer = YYUserInfoSerializer(toUser)
+            return Response(userSerializer.data, status=status.HTTP_200_OK)
+        
+    return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
     
