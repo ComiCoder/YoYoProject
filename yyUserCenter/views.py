@@ -149,7 +149,6 @@ def update_icon_image(request):
     return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
 
 
-
     
 def queryUserByPhone(phoneNum):
     userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)

@@ -14,7 +14,8 @@ from yoyoUtil import yoyoUtil
 from yyFriendshipManager.models import YYFriendShipInfo
 from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
 from yyStaffManager.models import YYStaffInfo, YYPostInfo
-from yyStaffManager.serializers import YYPaginatedStaffInfoSerializer
+from yyStaffManager.serializers import YYPaginatedPostInfoSerializer,YYPaginatedStaffInfoSerializer,\
+    YYPostInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
 from yoyoUtil import yyErrorUtil
 
@@ -187,7 +188,9 @@ def postTimeLine(request):
         sincePostID = postTimeLineForm.cleaned_data['sincePostID']
         if sincePostID == None:
             sincePostID = 0
-            
+        
+        sincePostID = int(sincePostID)
+        
         maxPostID = postTimeLineForm.cleaned_data['maxPostID']
         if maxPostID == None:
             maxPostID = 0
@@ -195,13 +198,39 @@ def postTimeLine(request):
         pageCount = postTimeLineForm.cleaned_data['pageCount']
         pageIndex = postTimeLineForm.cleaned_data['pageIndex']
         
+        if pageIndex < 1:
+            pageIndex = 1
+        
+        
         if sincePostID > 0:
             
             try:
-                allPostInfoList  = YYFriendShipInfo.objects.filter(fromUser__pk=user.pk).select_related('toUser').prefetch_related('yy_post_info').get(pk__gt=sincePostID)
-            except YYFriendShipInfo.DoesNotExist:
-                #return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
-                return HttpResponse("No Result",status=status.HTTP_200_OK)
+                #allPostInfoList  = YYFriendShipInfo.objects.filter(fromUser__pk=user.pk).select_related('toUser').prefetch_related('yy_post_info').get(pk__gt=sincePostID)
+                findPostInfoList = '''select post.*
+                 from yy_post_info post,yy_friendship_info friend 
+                 where (post.id > %d) and ((post.postUser_id = friend.toUser_id and friend.fromUser_id = %d) or (post.postUser_id = %d))
+                 ''' % (sincePostID, user.pk, user.pk)
+
+                allPostInfoList = YYFriendShipInfo.objects.raw(findPostInfoList)
+                paginator = Paginator(list(allPostInfoList), pageCount)
+                
+                try:
+                    postList = paginator.page(pageIndex)
+                    
+                    paginateObj = YYPaginatedPostInfoSerializer(instance=postList)
+                    return Response(paginateObj.data,status=status.HTTP_200_OK)
+        
+                    #paginateObj = YYPostInfoSerializer(allPostInfoList, many=True)
+                    #return Response(paginateObj.data,status=status.HTTP_200_OK)
+                except EmptyPage:
+                    return HttpResponse("No Content",status=status.HTTP_204_NO_CONTENT)
+                except Exception,e:
+                    print e
+                    return HttpResponse("Error",status=status.HTTP_200_OK)
+            except Exception,e:
+                print e
+                return HttpResponse("Error",status=status.HTTP_200_OK)
+            
             if allPostInfoList==None:
                 return HttpResponse("No Result",status=status.HTTP_200_OK)
             
