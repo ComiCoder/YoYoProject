@@ -5,4 +5,4 @@ from yoyoUtil import yyErrorUtil
 
 class ErrorResponse(Response):
     def __init__(self, path, errorID):
-        Response.__init__(self, yyErrorUtil.generateRsp(path, yyErrorUtil.ERR_SVC_20003), status=status.HTTP_400_BAD_REQUEST)
+        Response.__init__(self, yyErrorUtil.generateRsp(path, errorID), status=status.HTTP_400_BAD_REQUEST)

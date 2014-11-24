@@ -24,7 +24,7 @@ def create(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     
     createFriendshipForm = FriendshipForm(request.POST)
@@ -41,7 +41,7 @@ def create(request):
         toUser = yyGetUserByID(int(toUserID))
         
         if toUser==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003)
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
         
         if friendshipSvc.isFocusAlready(fromUserID, toUserID):
             return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20005)
@@ -65,7 +65,7 @@ def destroy(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     createFriendshipForm = FriendshipForm(request.POST)
     
     if createFriendshipForm.is_valid():
@@ -78,7 +78,7 @@ def destroy(request):
         toUser = yyGetUserByID(int(toUserID))
         
         if toUser==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003)
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
         
         
         friendShip = friendshipSvc.getFriendShip(fromUserID, toUserID)

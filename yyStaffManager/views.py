@@ -31,18 +31,14 @@ class PostStaffForm(forms.Form):
     postDesc = forms.CharField(max_length=300, required=False)
     
     
-class ViewUserStaffForm(forms.Form):
+class ViewStaffListForm(forms.Form):
     userID = forms.CharField(max_length=20, required=True)
     pageIndex = forms.IntegerField(min_value=1, max_value=200,required=True)
     pageCount = forms.IntegerField(min_value=20, max_value=100,required=True)
     
     
-class PostTimeLineForm(forms.Form):
-    sincePostID = forms.CharField(max_length=20,required=False)
-    maxPostID = forms.CharField(max_length=20,required=False)
-    pageIndex = forms.IntegerField(min_value=1, max_value=200,required=True)
-    pageCount = forms.IntegerField(min_value=20, max_value=100,required=True)
-
+class ViewStaffDetailForm(forms.Form):
+    staffID = forms.CharField(max_length=20, required=True)
     
 def handleUploadFiles(request):
     
@@ -98,7 +94,7 @@ def handleUploadFiles(request):
 def postStaff(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return HttpResponse(status.HTTP_401_UNAUTHORIZED)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     postStaffForm = PostStaffForm(request.POST)
     
@@ -106,7 +102,7 @@ def postStaff(request):
     if postStaffForm.is_valid():
         albumInfo = handleUploadFiles(request)
         if albumInfo == None:
-            return HttpResponse("Failed to upload images",status=status.HTTP_400_BAD_REQUEST)   
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20010_UPLOAD_ALBUM_EXCEPTION)   
         else:
             #after save the image, then create a new staff and reference post info
             with transaction.commit_on_success():
@@ -149,12 +145,12 @@ def postStaff(request):
 
 
 @api_view(['GET'])
-def viewStaff(request):
+def staffList(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return HttpResponse(status.HTTP_401_UNAUTHORIZED)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
-    viewUserStaffForms = ViewUserStaffForm(request.GET)
+    viewUserStaffForms = ViewStaffListForm(request.GET)
     if viewUserStaffForms.is_valid():
         userID = viewUserStaffForms.cleaned_data['userID']
         
@@ -179,64 +175,25 @@ def viewStaff(request):
         
     else:
         return HttpResponse("Format Error",status=status.HTTP_400_BAD_REQUEST)
-    
- 
-@api_view(['GET'])   
-def postTimeLine(request):
+
+@api_view(['GET'])
+def staffDetail(request): 
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return HttpResponse(status.HTTP_401_UNAUTHORIZED)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+    viewUserStaffForms = ViewStaffDetailForm(request.GET)
+    if viewUserStaffForms.is_valid():
+        staffID = viewUserStaffForms.cleaned_data['staffID']
+        
+        user = yyGetUserByID(int(staffID))
+        if user==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
+        
+        
+        
+        
+    return None
     
-    postTimeLineForm = PostTimeLineForm(request.GET)
-    
-    if postTimeLineForm.is_valid():
-        sincePostID = postTimeLineForm.cleaned_data['sincePostID']
-        if sincePostID == None:
-            sincePostID = 0
-        
-        sincePostID = int(sincePostID)
-        
-        maxPostID = postTimeLineForm.cleaned_data['maxPostID']
-        if maxPostID == None:
-            maxPostID = 0
-            
-        pageCount = postTimeLineForm.cleaned_data['pageCount']
-        pageIndex = postTimeLineForm.cleaned_data['pageIndex']
-        
-        if pageIndex < 1:
-            pageIndex = 1
-        
-        
-        if sincePostID > 0:
-            
-            try:
-                #allPostInfoList  = YYFriendShipInfo.objects.filter(fromUser__pk=user.pk).select_related('toUser').prefetch_related('yy_post_info').get(pk__gt=sincePostID)
-                findPostInfoList = '''select post.*
-                 from yy_post_info post,yy_friendship_info friend 
-                 where (post.id > %d) and ((post.postUser_id = friend.toUser_id and friend.fromUser_id = %d) or (post.postUser_id = %d))
-                 ''' % (sincePostID, user.pk, user.pk)
 
-                allPostInfoList = YYFriendShipInfo.objects.raw(findPostInfoList)
-                paginator = Paginator(list(allPostInfoList), pageCount)
-                
-                try:
-                    postList = paginator.page(pageIndex)
-                    
-                    paginateObj = YYPaginatedPostInfoSerializer(instance=postList)
-                    return Response(paginateObj.data,status=status.HTTP_200_OK)
-        
-                    #paginateObj = YYPostInfoSerializer(allPostInfoList, many=True)
-                    #return Response(paginateObj.data,status=status.HTTP_200_OK)
-                except EmptyPage:
-                    return HttpResponse("No Content",status=status.HTTP_204_NO_CONTENT)
-                except Exception,e:
-                    print e
-                    return HttpResponse("Error",status=status.HTTP_200_OK)
-            except Exception,e:
-                print e
-                return HttpResponse("Error",status=status.HTTP_200_OK)
-            
-            if allPostInfoList==None:
-                return HttpResponse("No Result",status=status.HTTP_200_OK)
             
     

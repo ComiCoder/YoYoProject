@@ -9,8 +9,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^postStaff/$', views.postStaff, name='postStaff'),
-    url(r'^viewStaff/$', views.viewStaff, name='viewStaff'),
-    url(r'^postTimeLine/$',views.postTimeLine, name='postTimeLine'),
+    url(r'^staffList/$', views.staffList, name='staffList'),
+    url(r'^staffDetail/$', views.staffDetail, name='viewStaff')
+    #url(r'^postTimeLine/$',views.postTimeLine, name='postTimeLine'),
     
     
     

@@ -139,7 +139,7 @@ def updateIcon(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     if request.FILES['userIcons'] ==None:
         return HttpResponse(content="no image upload", status=status.HTTP_400_BAD_REQUEST)
