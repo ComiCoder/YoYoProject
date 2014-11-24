@@ -8,9 +8,13 @@ from YoYoProject import customSettings
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
 from yyUserCenter.auth import yyLogin, yyAuthenticateByID,\
     yyGetUserByPhone, yyIsPasswordEquas, yyIsWrongUser, yyHasLogin,\
-    yySessionHasKey, yyGetUserByID
+    yySessionHasKey, yyGetUserByID, yyGetUserFromRequest
 from yyUserCenter.models import YYAccountInfo
 from yyUserCenter.serializers import YYUserInfoSerializer
+from YoYoProject.errorResponse import ErrorResponse
+from yoyoUtil import yyErrorUtil
+from yyMongoImgManager.models import YYImgInfo
+from yyMongoImgManager import imgService
 
 
 
@@ -131,21 +135,29 @@ def register(request):
 
 
 @api_view(['POST'])
-def update_icon_image(request):
-    if yySessionHasKey(request):
-        return False
+def updateIcon(request):
+    fromUser =  yyGetUserFromRequest(request)
+    
+    if fromUser == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000)
     
     if request.FILES['userIcons'] ==None:
         return HttpResponse(content="no image upload", status=status.HTTP_400_BAD_REQUEST)
     
-    tempUserInfo= yyGetUserByID(request.session[customSettings.USER_SESSION_KEY])
-    if tempUserInfo==None:
-        return HttpResponse(content='User not found', status=status.HTTP_401_UNAUTHORIZED)
     
-    tempUserInfo.largeIconURL = request.FILES['userIcons']
-    tempUserInfo.save()
+    #upload the image to mongodb
+    try:
+        imgPK =  imgService.uploadImg(request.FILES['userIcons'])
+        if imgPK<0:
+            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20008_UPLOAD_EMPTY_IMG)
+        fromUser.iconID = imgPK
+        
+    except:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20009_UPLOAD_EXCEPTION)
     
-    userInfoSerializer = YYUserInfoSerializer(tempUserInfo)
+    fromUser.save()
+    
+    userInfoSerializer = YYUserInfoSerializer(fromUser)
     return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
 
 

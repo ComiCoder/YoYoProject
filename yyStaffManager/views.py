@@ -18,6 +18,7 @@ from yyStaffManager.serializers import YYPaginatedPostInfoSerializer,YYPaginated
     YYPostInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
 from yoyoUtil import yyErrorUtil
+from yyMongoImgManager import imgService
 
 
 class PostStaffForm(forms.Form):
@@ -52,12 +53,18 @@ def handleUploadFiles(request):
         imgList = []
         for afile in request.FILES.getlist('images'):
             fileCount=fileCount+1
-            
             img = YYImageInfo()
-            img.imgURL = afile
-            print(img.imgURL.width)
-            img.width = img.imgURL.width
-            img.height = img.imgURL.height
+            try:
+                imgPK =  imgService.uploadImg(afile)
+                if imgPK<0:
+                    #TODO: raise a exception
+                    return None
+                img.imgID = imgPK
+        
+            except:
+                #TODO: raise a exception
+                return None
+            
             img.save()
             
             imgList.append(img)
@@ -89,8 +96,6 @@ def handleUploadFiles(request):
 # Create your views here.
 @api_view(['POST'])
 def postStaff(request):
-    
-    
     user =  yyGetUserFromRequest(request)
     if user == None:
         return HttpResponse(status.HTTP_401_UNAUTHORIZED)

@@ -1,5 +1,9 @@
 from django.db import models
 from YoYoProject import customSettings
+from mongoengine import Document
+
+    
+    
 
 # Create your models here.
 class YYImageInfo(models.Model):
@@ -14,9 +18,7 @@ class YYImageInfo(models.Model):
       (IMAGE_TYPE_ACTIVITY,"Activity"),
     )
     
-    imgURL = models.ImageField(upload_to=IMG_UPLOAD_PATH)
-    width = models.SmallIntegerField()
-    height = models.SmallIntegerField()
+    imgID = models.CharField(max_length=30, default='-')
     type = models.SmallIntegerField(choices=IMAGE_TYPE_CHOICES,default=IMAGE_TYPE_STAFF)
     createTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)

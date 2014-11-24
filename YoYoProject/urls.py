@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^userCenter/',include('yyUserCenter.urls')),
     url(r'^staff/',include('yyStaffManager.urls')),
     url(r'^friendship/',include('yyFriendshipManager.urls')),
+    url(r'^image/',include('yyMongoImgManager.urls')),
     
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

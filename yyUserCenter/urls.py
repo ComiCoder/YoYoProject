@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^logout/$',views.logout, name='logout'),
     
     url(r'^update/$',views.logout, name='update'),
-    url(r'^updateIcon/$',views.logout, name='updateIcon'),
+    url(r'^updateIcon/$',views.updateIcon, name='updateIcon'),
     url(r'^resetPwd/$',views.logout, name='resetPwd'),
     
     url(r'^view/$',views.logout, name='view'),

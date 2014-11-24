@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'yyStaffManager',
     'yyImgManager',
     'yyFriendshipManager',
+    'yyMongoImgManager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,6 +90,8 @@ USE_L10N = True
 
 USE_TZ = False
 
+#session settings
+SESSION_COOKIE_AGE=60*30 #30 minutes
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
