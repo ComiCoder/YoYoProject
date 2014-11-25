@@ -56,6 +56,10 @@ class ViewStaffDetailForm(forms.Form):
 class DelStaffForm(forms.Form):
     staffID = forms.CharField(max_length=20, required=True)
     
+class ForwardStaffForm(forms.Form):
+    staffID = forms.CharField(max_length=20, required=True)
+    postDesc = forms.CharField(max_length=300, required=False)
+    
 def handleUploadFiles(request):
     
     album = None
@@ -294,7 +298,30 @@ def staffDel(request):
         
     else:
         return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
-            
 
+@api_view(['POST'])
+def forwardStaff(request):
+    user =  yyGetUserFromRequest(request)
+    if user == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+    forwardForms = ForwardStaffForm(request)
+    if forwardForms.is_valid():
+        staffID = forwardForms.cleaned_data['staffID']
+        staff = staffSvc.getStaffByID(int(staffID))
+        if staff==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+        postStaff = YYPostInfo()
+        postStaff.postStaff = staff
+        postStaff.postUser = user
+        
+        postDesc = forwardForms.cleaned_data['postDesc']
+        
+        if postDesc:
+            
+            postStaff.description = postDesc
+            
+        postStaff.save()
+    else:
+        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
 
     

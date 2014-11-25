@@ -44,6 +44,7 @@ class YYPostInfo(models.Model):
     postStaff = models.ForeignKey(YYStaffInfo, null=False)
     description = models.CharField(max_length=300, null=True)
     status = models.SmallIntegerField(choices = customSettings.INFO_STATUS_CHOICES, default=customSettings.INFO_STATUS_DEFAULT)
+    
     createTime = models.DateTimeField(auto_now_add=True, null=True)
     updateTime = models.DateTimeField(auto_now=True, null=True)
     
