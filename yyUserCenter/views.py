@@ -1,3 +1,4 @@
+from django import forms
 from django.http.response import HttpResponse, HttpResponseRedirect
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -6,17 +7,15 @@ from weibo import APIClient
 
 from YoYoProject import customSettings
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
-from yyUserCenter.auth import yyLogin, yyAuthenticateByID,\
-    yyGetUserByPhone, yyIsPasswordEquas, yyIsWrongUser, yyHasLogin,\
+from YoYoProject.errorResponse import ErrorResponse
+from yoyoUtil import yyErrorUtil
+from yyMongoImgManager import imgService
+from yyMongoImgManager.models import YYImgInfo
+from yyUserCenter.auth import yyLogin, yyAuthenticateByID, \
+    yyGetUserByPhone, yyIsPasswordEquas, yyIsWrongUser, yyHasLogin, \
     yySessionHasKey, yyGetUserByID, yyGetUserFromRequest
 from yyUserCenter.models import YYAccountInfo
 from yyUserCenter.serializers import YYUserInfoSerializer
-from YoYoProject.errorResponse import ErrorResponse
-from yoyoUtil import yyErrorUtil
-from yyMongoImgManager.models import YYImgInfo
-from yyMongoImgManager import imgService
-
-
 
 
 APP_KEY = '3920803036' # app key  
@@ -28,6 +27,11 @@ MY_APP_SECRET = APP_SECRET
 REDIRECT_URL = 'http://127.0.0.1:8000/userCenter/weibo_login_callback/'
 
 client = APIClient(APP_KEY, APP_SECRET, REDIRECT_URL)
+
+
+
+class BindUserWithPhoneForm(forms.Form):
+    phoneNum = forms.CharField(max_length=20,required=True)
 
 def lookUserBySinaID(sinaID):
     authWeiboID = customSettings.WEIBO_ID_PREFIX + sinaID
@@ -160,7 +164,15 @@ def updateIcon(request):
     userInfoSerializer = YYUserInfoSerializer(fromUser)
     return Response(userInfoSerializer.data,status=status.HTTP_200_OK)
 
-
+@api_view(['POST'])
+def bindWithPhone(request):
+    user =  yyGetUserFromRequest(request)
+    
+    if user == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+    
+    
+    return None
     
 def queryUserByPhone(phoneNum):
     userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)

@@ -35,9 +35,6 @@ class YYStaffInfo(models.Model):
     
     class Meta:
         db_table = 'yy_staff_info'
-        
-        
-
 
 class YYPostInfo(models.Model):
     postUser = models.ForeignKey(YYAccountInfo, null=False)
