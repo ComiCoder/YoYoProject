@@ -15,17 +15,30 @@ from yyFriendshipManager.models import YYFriendShipInfo
 from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
 from yyStaffManager.models import YYStaffInfo, YYPostInfo
 from yyStaffManager.serializers import YYPaginatedPostInfoSerializer,YYPaginatedStaffInfoSerializer,\
-    YYPostInfoSerializer
+    YYPostInfoSerializer, YYStaffInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
 from yoyoUtil import yyErrorUtil
 from yyMongoImgManager import imgService
+from yyStaffManager import staffSvc
+import logging
 
+logger = logging.getLogger('staffManager.models')
 
 class PostStaffForm(forms.Form):
     dealType = forms.IntegerField(max_value=10,required=True)
     staffDesc = forms.CharField(max_length=300,required=True)
     price = forms.FloatField(required=False)
-    position = forms.CharField(max_length=100)
+    position = forms.CharField(max_length=100,required=False)
+    longitude = forms.FloatField(required=False)
+    latitude = forms.FloatField(required=False)
+    postDesc = forms.CharField(max_length=300, required=False)
+    
+class EditStaffForm(forms.Form):
+    staffID = forms.CharField(max_length=20, required=True)
+    dealType = forms.IntegerField(max_value=10,required=False)
+    staffDesc = forms.CharField(max_length=300,required=False)
+    price = forms.FloatField(required=False)
+    position = forms.CharField(max_length=100,required=False)
     longitude = forms.FloatField(required=False)
     latitude = forms.FloatField(required=False)
     postDesc = forms.CharField(max_length=300, required=False)
@@ -38,6 +51,9 @@ class ViewStaffListForm(forms.Form):
     
     
 class ViewStaffDetailForm(forms.Form):
+    staffID = forms.CharField(max_length=20, required=True)
+
+class DelStaffForm(forms.Form):
     staffID = forms.CharField(max_length=20, required=True)
     
 def handleUploadFiles(request):
@@ -87,7 +103,7 @@ def handleUploadFiles(request):
     if album == None:
         return None
     else:
-         return album
+        return album
 
 # Create your views here.
 @api_view(['POST'])
@@ -177,7 +193,7 @@ def staffList(request):
         return HttpResponse("Format Error",status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def staffDetail(request): 
+def staffDetail(request, format=None): 
     user =  yyGetUserFromRequest(request)
     if user == None:
         return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
@@ -185,15 +201,100 @@ def staffDetail(request):
     if viewUserStaffForms.is_valid():
         staffID = viewUserStaffForms.cleaned_data['staffID']
         
-        user = yyGetUserByID(int(staffID))
-        if user==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
+        staff = staffSvc.getStaffByID(int(staffID))
+        if staff==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         
+        staffSerializer = YYStaffInfoSerializer(staff)
+        return Response(staffSerializer.data, status=status.HTTP_200_OK)
         
-        
-        
-    return None
+    else:
+        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
     
 
+@api_view(['POST'])
+def staffEdit(request):
+    user =  yyGetUserFromRequest(request)
+    if user == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+    
+    editStaffForm = EditStaffForm(request.POST)
+    if editStaffForm.is_valid():
+        staffID = editStaffForm.cleaned_data['staffID']
+        
+        staff = staffSvc.getStaffByID(int(staffID))
+        if staff==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+        
+        dealType = editStaffForm.clean_data['dealType']
+        
+        if dealType:
+            dealType = int(dealType)
+             
+        
+        staffDesc = editStaffForm.clean_data['staffDesc']
+        price = editStaffForm.clean_data['price']
+        
+        
+        
+        if dealType == YYStaffInfo.STAFF_DEAL_TYPE_TRADE and price== None:
+            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        if price == None:
+            price = 0.0
+        postDesc = editStaffForm.clean_data['postDesc']
+        
+        
+        if dealType > 0 and staff.dealType != dealType:
+            staff.dealType = dealType
+        
+        if staff.staffDesc != staffDesc:
+            staff.staffDesc = staffDesc
+        
+        if price > 0 and staff.price != staff.price:
+            staff.price = price
+        
+        if price == 0.0:
+            staff.price = price
+        
+        if staff.postDesc!=postDesc:
+            staff.postDesc
             
+        staff.save()
+        staffSerializer = YYStaffInfoSerializer(staff)
+        return Response(staffSerializer.data, status=status.HTTP_200_OK)
+        
+    else:
+        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+   
+
+@api_view(['GET'])
+def staffDel(request):
+    user =  yyGetUserFromRequest(request)
+    if user == None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+    viewUserStaffForms = ViewStaffDetailForm(request.GET)
+    if viewUserStaffForms.is_valid():
+        staffID = viewUserStaffForms.cleaned_data['staffID']
+        
+        staff = staffSvc.getStaffByID(int(staffID))
+        if staff==None:
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+        
+        if staff.publisher.pk != user.pk:
+            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20012_NO_AUTHORITY)
+        staffSerializer = YYStaffInfoSerializer(staff)
+        try:
+            
+            staff.delete()
+        except Exception, e:
+            logger.error("Failed to delete Staff, error %s" %e)
+            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20013_DB_EXCEPTION)
+        
+        return Response(staffSerializer.data, status=status.HTTP_200_OK)
+        
+    else:
+        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
+            
+
+
     

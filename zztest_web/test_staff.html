@@ -22,7 +22,7 @@
 </form>
 
 <p>View User Staff</p>
-<form action="http://127.0.0.1:8000/staff/viewStaff" method="get" enctype="multipart/form-data">
+<form action="http://127.0.0.1:8000/staff/staffList" method="get" enctype="multipart/form-data">
     userID: <input type="text" name="userID"/>
 	pageIndex: <input type="text" name="pageIndex"/>
 	<input type="hidden" name="pageCount" value="20"/>
@@ -30,7 +30,7 @@
     <input type="submit" name="submit" value="viewStaff" />
 </form>
 
-
+<!-- 
 <p>查看好友post</p>
 <form action="http://127.0.0.1:8000/staff/postTimeLine" method="get" enctype="multipart/form-data">
     sincePostID: <input type="text" name="sincePostID"/>
@@ -39,5 +39,14 @@
 	<input type="hidden" name="pageCount" value="20"/>
 	
     <input type="submit" name="submit" value="viewStaff" />
+</form>
+
+-->
+
+
+<p>查看staff</p>
+<form action="http://127.0.0.1:8000/staff/staffDetail" method="get" enctype="multipart/form-data">
+    staffID: <input type="text" name="staffID"/>
+	<input type="submit" value="查看"/>
 </form>
 </html>
