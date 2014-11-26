@@ -16,6 +16,7 @@ from yyUserCenter.auth import yyLogin, yyAuthenticateByID, \
     yySessionHasKey, yyGetUserByID, yyGetUserFromRequest
 from yyUserCenter.models import YYAccountInfo
 from yyUserCenter.serializers import YYUserInfoSerializer
+import logging
 
 
 APP_KEY = '3920803036' # app key  
@@ -28,6 +29,7 @@ REDIRECT_URL = 'http://127.0.0.1:8000/userCenter/weibo_login_callback/'
 
 client = APIClient(APP_KEY, APP_SECRET, REDIRECT_URL)
 
+logger = logging.getLogger('yyUserCenter.views')
 
 
 class BindUserWithPhoneForm(forms.Form):
@@ -171,8 +173,24 @@ def bindWithPhone(request):
     if user == None:
         return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
+    if user.phoneNum != None:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20014_ALREADY_BIND_PHONE)
     
-    return None
+    form = BindUserWithPhoneForm(request)
+    
+    if form.is_valid():
+        phoneNum = form.cleaned_data['phoneNum']
+        user.phoneNum = phoneNum
+        try:
+            user.save()
+        except:
+            logger.error("Failed to update userinfo")
+            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20013_DB_EXCEPTION)
+        
+    else:
+        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        
+    #return None
     
 def queryUserByPhone(phoneNum):
     userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)

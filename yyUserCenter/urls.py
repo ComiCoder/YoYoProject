@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^update/$',views.logout, name='update'),
     url(r'^updateIcon/$',views.updateIcon, name='updateIcon'),
     url(r'^resetPwd/$',views.logout, name='resetPwd'),
+    url(r'^bindWithPhone/$',views.bindWithPhone, name='bindWithPhone'),
     
     url(r'^view/$',views.logout, name='view'),
     
