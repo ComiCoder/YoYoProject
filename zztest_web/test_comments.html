@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>CommentInfo to Staff Create</p>
+<form action="http://127.0.0.1:8000/comments/create/" method="post" target="_blank" 
+		accept-charset="ISO-8859-15">
+  toUserID: <input type="text" name="toUserID" /><br />
+  staffID: <input type="text" name="targetID" /><br />
+  commentDesc: <input type="text" name="commentDesc" /><br />
+  <input type="hidden" name="targetType" value="1"/><br />
+  <input type="submit" value="create" />
+</form>
+<br/>
+
+<p>CommentInfo View</p>
+<form action="http://127.0.0.1:8000/comments/show/" method="get" target="_blank" 
+		accept-charset="ISO-8859-15">
+  targetID: <input type="text" name="targetID" /><br />
+  pageIndex: <input type="text" name="pageIndex"/>
+  <input type="hidden" name="pageCount" value="20"/>
+  <input type="submit" value="create" />
+</form>
+ObjectId("547820f94b69b2263c9cd8d2")
+</html>

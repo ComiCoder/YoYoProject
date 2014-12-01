@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from YoYoProject import customSettings
 
 # Create your models here.
 class YYAccountInfo(models.Model):
@@ -43,7 +44,7 @@ class YYAccountInfo(models.Model):
     authValue = models.SmallIntegerField(default=0)
     
     authWeiboID = models.CharField(max_length=20, null=True) #sina weibo id
-    
+    deleteStatus = models.SmallIntegerField(choices=customSettings.INFO_DELETE_CHOICES, default=customSettings.INFO_DELETE_NO)
     createTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
     

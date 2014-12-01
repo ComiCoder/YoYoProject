@@ -1,0 +1,71 @@
+Internal Server Error: /comments/create/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Python27\lib\site-packages\django\views\generic\base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Python27\lib\site-packages\rest_framework\views.py", line 403, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Python27\lib\site-packages\rest_framework\views.py", line 400, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Python27\lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\views.py", line 78, in createComment
+    return Response(serializer.data(),status=status.HTTP_200_OK)
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\serializers.py", line 22, in data
+    return json.dumps(dict)
+  File "D:\Python27\lib\json\__init__.py", line 243, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python27\lib\json\encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python27\lib\json\encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python27\lib\json\encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: datetime.datetime(2014, 11, 28, 15, 27, 46, 433000) is not JSON serializable
+Not Found: /favicon.ico
+Internal Server Error: /comments/show/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Python27\lib\site-packages\django\views\generic\base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Python27\lib\site-packages\rest_framework\views.py", line 403, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Python27\lib\site-packages\rest_framework\views.py", line 400, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Python27\lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\views.py", line 140, in showComments
+    staffList = paginator.page(pageIndex)
+  File "D:\Python27\lib\site-packages\django\core\paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "D:\Python27\lib\site-packages\django\core\paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "D:\Python27\lib\site-packages\django\core\paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Python27\lib\site-packages\django\core\paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\queryset.py", line 108, in count
+    self._len = super(QuerySet, self).count(with_limit_and_skip)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 339, in count
+    return self._cursor.count(with_limit_and_skip=with_limit_and_skip)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 1182, in _cursor
+    self._cursor_obj = self._collection.find(self._query,
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 1215, in _query
+    self._mongo_query = self._query_obj.to_query(self._document)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\visitor.py", line 92, in to_query
+    query = query.accept(QueryCompilerVisitor(document))
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\visitor.py", line 157, in accept
+    return visitor.visit_query(self)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\visitor.py", line 80, in visit_query
+    return transform.query(self.document, **query.query)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\transform.py", line 87, in query
+    value = field.prepare_query_value(op, value)
+  File "D:\Python27\lib\site-packages\mongoengine\fields.py", line 196, in prepare_query_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '547820f94b69b2263c9cd8d2'

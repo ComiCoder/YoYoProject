@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf.global_settings import STATIC_ROOT
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 MEDIA_ROOT = 'G:/py_work_space/IMG_DATA/'
@@ -75,6 +76,34 @@ DATABASES = {
         'HOST': '127.0.0.1',  
         'PORT': '3306', 
     }
+}
+
+
+#logging setting
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+     'formatters': {
+    'standard': {
+                     'format': '%(levelname)s %(asctime)s %(message)s'
+                },
+     },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR + '/logs/','yy.log'),
+        },
+    },
+           
+    
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
 
 # Internationalization

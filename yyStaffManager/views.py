@@ -165,7 +165,7 @@ def postStaff(request):
 
 
 @api_view(['GET'])
-def staffList(request):
+def staffList(request, format=None):
     user =  yyGetUserFromRequest(request)
     if user == None:
         return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)

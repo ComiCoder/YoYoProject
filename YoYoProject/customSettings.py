@@ -17,4 +17,13 @@ INFO_STATUS_CHOICES = (
     (INFO_STATUS_DEFAULT,'default'),
 )
 
+INFO_DELETE_NO = 0
+INFO_DELETE_YES = 1
+
+INFO_DELETE_CHOICES = (
+    (INFO_DELETE_NO,'default'),
+    (INFO_DELETE_YES,'delete'),
+)
+
+YOYO_MONGO_DB = 'yoyo_mongo_db'
 

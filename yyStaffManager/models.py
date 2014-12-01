@@ -30,6 +30,7 @@ class YYStaffInfo(models.Model):
     latitude = models.FloatField(default=0.0, null=True)
     publisher = models.ForeignKey(YYAccountInfo, null=True)  #The Publisher Info
     status = models.SmallIntegerField(choices = customSettings.INFO_STATUS_CHOICES, default=customSettings.INFO_STATUS_DEFAULT)
+    deleteStatus = models.SmallIntegerField(choices=customSettings.INFO_DELETE_CHOICES, default=customSettings.INFO_DELETE_NO)
     createTime = models.DateTimeField(auto_now_add=True, null=True)
     updateTime = models.DateTimeField(auto_now=True, null=True)
     
@@ -41,7 +42,7 @@ class YYPostInfo(models.Model):
     postStaff = models.ForeignKey(YYStaffInfo, null=False)
     description = models.CharField(max_length=300, null=True)
     status = models.SmallIntegerField(choices = customSettings.INFO_STATUS_CHOICES, default=customSettings.INFO_STATUS_DEFAULT)
-    
+    deleteStatus = models.SmallIntegerField(choices=customSettings.INFO_DELETE_CHOICES, default=customSettings.INFO_DELETE_NO)
     createTime = models.DateTimeField(auto_now_add=True, null=True)
     updateTime = models.DateTimeField(auto_now=True, null=True)
     
