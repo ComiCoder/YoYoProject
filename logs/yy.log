@@ -69,3 +69,7 @@ Traceback (most recent call last):
   File "D:\Python27\lib\site-packages\mongoengine\fields.py", line 196, in prepare_query_value
     return int(value)
 ValueError: invalid literal for int() with base 10: '547820f94b69b2263c9cd8d2'
+Not Found: /chat/
+Not Found: /favicon.ico
+Not Found: /chat/
+Not Found: /chat/

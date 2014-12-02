@@ -17,6 +17,7 @@ class YYStaffInfoSerializer(serializers.ModelSerializer):
 class YYPostInfoSerializer(serializers.ModelSerializer):
     postUser = YYUserInfoSerializer
     postStaff = YYStaffInfoSerializer
+
     
     class Meta:
         model = YYPostInfo

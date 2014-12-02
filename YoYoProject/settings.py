@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'ws4redis',
     'rest_framework',
     'yyUserCenter',
     'yyStaffManager',
@@ -58,6 +58,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'YoYoProject.urls'
 
@@ -126,3 +128,5 @@ SESSION_COOKIE_AGE=60*30 #30 minutes
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
