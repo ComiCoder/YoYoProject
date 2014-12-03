@@ -125,7 +125,8 @@ def postStaff(request):
             return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20010_UPLOAD_ALBUM_EXCEPTION)   
         else:
             #after save the image, then create a new staff and reference post info
-            with transaction.commit_on_success():
+            transaction.set_autocommit(False)
+            try:
                 
                 staffInfo = YYStaffInfo()
                 
@@ -154,7 +155,8 @@ def postStaff(request):
                 postInfo.description = postStaffForm.cleaned_data['postDesc']
                 
                 postInfo.save()
-                
+            finally:
+                transaction.set_autocommit(True)   
                         
             return HttpResponse("POST successfully",status=status.HTTP_200_OK)
         

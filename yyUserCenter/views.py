@@ -116,7 +116,7 @@ def logout(request):
     return HttpResponse(status=status.HTTP_200_OK)
 
 @api_view(['POST'])       
-def register(request):  
+def register(request, format=None):  
     #first check if the user has been logged already
     if not request.POST.get('phoneNum'):
         return HttpResponse("No PhoneNum",status=status.HTTP_400_BAD_REQUEST)
@@ -137,7 +137,7 @@ def register(request):
         userInfoSerializer = YYUserInfoSerializer(userInfo)
         return Response(userInfoSerializer.data,status=status.HTTP_201_CREATED)
     else:
-        return Response(userInfoSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response("error",status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

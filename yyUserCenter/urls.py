@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from yyUserCenter import views
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = patterns('',
     # Examples:
@@ -29,3 +30,5 @@ urlpatterns = patterns('',
     #url(r'^logout/$',views.logout),
     #url(r'^update_icon_image/$',views.update_icon_image)
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns)
