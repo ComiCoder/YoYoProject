@@ -9,24 +9,34 @@ import tornado.wsgi
 
 from django.core.wsgi import get_wsgi_application
 import YoYoProject
+from yyTorHandler.yyTorHandler import YYTornadoHandler
 #sys.path.append('/home/lawgon/') # path to your project ( if you have it in another dir).
 
-define('port', type=int, default=8080)
+define('port', type=int, default=8000)
 
 def main():
-    print 'start django with tornado'
+    
     os.environ['DJANGO_SETTINGS_MODULE'] = 'YoYoProject.settings' # path to your settings module
     #application = django.core.handlers.wsgi.WSGIHandler()
-    application = get_wsgi_application()
-    print 'start django'
-    
-    print  YoYoProject.settings.BASE_DIR
-    print YoYoProject.settings.STATICFILES_DIRS
+    wsgi_app  = get_wsgi_application()
+    container = tornado.wsgi.WSGIContainer(wsgi_app)
     
     
-    container = tornado.wsgi.WSGIContainer(application)
-    http_server = tornado.httpserver.HTTPServer(container)
-    http_server.listen(8888)
+    settings = dict(
+            #template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            debug=True,
+        )
+    
+    tornado_app = tornado.web.Application(
+        [
+            ('/hello-tornado', YYTornadoHandler),
+            ('.*', tornado.web.FallbackHandler, dict(fallback=container)),
+        ], **settings)
+    
+   #container = tornado.wsgi.WSGIContainer(tornado_app)
+    http_server = tornado.httpserver.HTTPServer(tornado_app)
+    http_server.listen(options.port)
     
     print "start tornado"
     tornado.ioloop.IOLoop.instance().start()
