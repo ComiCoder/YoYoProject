@@ -10,6 +10,7 @@ import tornado.wsgi
 from django.core.wsgi import get_wsgi_application
 import YoYoProject
 from yyTorHandler.yyTorHandler import YYTornadoHandler
+from yyTorHandler.yyWebSocket import YYWebSocketHandler
 #sys.path.append('/home/lawgon/') # path to your project ( if you have it in another dir).
 
 define('port', type=int, default=8000)
@@ -30,7 +31,8 @@ def main():
     
     tornado_app = tornado.web.Application(
         [
-            ('/hello-tornado', YYTornadoHandler),
+            (r'/hello-tornado', YYTornadoHandler),
+            (r'/WebSocket', YYWebSocketHandler),
             ('.*', tornado.web.FallbackHandler, dict(fallback=container)),
         ], **settings)
     
@@ -38,7 +40,7 @@ def main():
     http_server = tornado.httpserver.HTTPServer(tornado_app)
     http_server.listen(options.port)
     
-    print "start tornado"
+    print "start tornado with django at %d" %options.port
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
