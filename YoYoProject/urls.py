@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     url(r'^friendship/',include('yyFriendshipManager.urls')),
     url(r'^image/',include('yyMongoImgManager.urls')),
     url(r'^comments/',include('yyCommentCenter.urls')),
+    url(r'^tag/',include('yyTagManager.urls')),
+    
     
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

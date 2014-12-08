@@ -32,7 +32,7 @@ def main():
     tornado_app = tornado.web.Application(
         [
             (r'/hello-tornado', YYTornadoHandler),
-            (r'/WebSocket', YYWebSocketHandler),
+            (r'/WebSocket/([a-zA-Z0-9]*)$', YYWebSocketHandler),
             ('.*', tornado.web.FallbackHandler, dict(fallback=container)),
         ], **settings)
     

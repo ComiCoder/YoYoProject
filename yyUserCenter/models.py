@@ -48,7 +48,10 @@ class YYAccountInfo(models.Model):
     createTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
     
-    def is_admin(self):
+    
+    USERNAME_FIELD = 'pk'
+    
+    '''def is_admin(self):
         return self.type == self.USER_TYPE_ADMIN
     
     def check_password(self, password=None):
@@ -56,6 +59,7 @@ class YYAccountInfo(models.Model):
             if self.password == None or len(self.password)==0:
                 return True
         return self.password == password
+        '''
     
     class Meta:
         db_table = 'yy_account_info'

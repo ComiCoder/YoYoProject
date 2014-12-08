@@ -92,8 +92,8 @@ def yyIsPasswordEquas(user, enterPwd):
     
     
 
-class YYCustomBackend:
-    
+class YYCustomBackend(object):
+    '''
     def authenticate_by_id(self, user_id, password):
         try:
             user = YYAccountInfo.objects.get(pk=user_id)
@@ -103,6 +103,8 @@ class YYCustomBackend:
             if user.check_password(password):
                 return user
         return None
+    '''
+    
     
     def authenticate(self, phoneNum=None, password=None):
         try:
