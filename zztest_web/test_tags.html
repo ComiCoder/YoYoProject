@@ -5,12 +5,33 @@
 <body>
 
 <p>Create TagInfo</p>
-<form action="http://127.0.0.1:8000/tag/createTag/" method="post">
+<form action="http://127.0.0.1:8000/tag/createTag/" method="post" target="_blank">
     tagType: <input type="text" name="tagType" value="1"/>
 	tagValue: <input type="text" name="tagValue"/>
 	
     <input type="submit" name="提交"/>
 </form>
 
+<p>View TagInfo List</p>
+<form action="http://127.0.0.1:8000/tag/viewTag" method="get" target="_blank">
+	pageIndex: <input type="text" name="pageIndex"/>
+	<input type="hidden" name="pageCount" value="20"/>
+	
+    <input type="submit" name="submit" />
+</form>
 
+<p>Edit TagInfo</p>
+<form action="http://127.0.0.1:8000/tag/editTag" method="get" target="_blank">
+	tagId:	<input type="text" name="tagID"/>
+	tagType: <input type="text" name="tagType"/>
+	tagValue: <input type="text" name="tagValue"/>
+	
+    <input type="submit" name="提交"/>
+</form>
+
+<p>Refresh To Redis</p>
+<form action="http://127.0.0.1:8000/tag/refreshTag/" method="post" target="_blank">
+	
+    <input type="submit" name="refresh"/>
+</form>
 </html>

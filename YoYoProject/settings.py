@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'yyImgManager',
     'yyFriendshipManager',
     'yyMongoImgManager',
+    'yyTagManager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -122,6 +123,20 @@ USE_TZ = False
 
 #session settings
 SESSION_COOKIE_AGE=60*30 #30 minutes
+
+
+#Cache settings
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": "121.41.46.183:6379:1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+            
+        }
+    }
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

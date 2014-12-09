@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from YoYoProject.errorResponse import ErrorResponse
-from yoyoUtil import yyErrorUtil
+from yoyoUtil import yyResponseUtil
 from yyCommentCenter.models import YYCommentInfo
 from yyCommentCenter.serializers import YYCommentInfoSerializer,\
     YYPaginatedCommentInfoSerializer
@@ -45,7 +45,7 @@ class ViewCommentForm(forms.Form):
 def createComment(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     forms = CreateCommentForm(request.POST)
     if forms.is_valid():
@@ -64,7 +64,7 @@ def createComment(request):
         if targetType == YYCommentInfo.TARGET_TYPE_STAFF:
             targetStaff = staffSvc.getStaffByID(targetID)
             if targetStaff == None:
-                return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+                return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         elif targetType == YYCommentInfo.TARGET_TYPE_DEAL:
             return ErrorResponse()
         
@@ -74,7 +74,7 @@ def createComment(request):
         if toUserID:
             toUser = yyGetUserByID(toUserID)
             if toUser==None:
-                return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20015_TARGET_USER_NOT_EXIST)
+                return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20015_TARGET_USER_NOT_EXIST)
             comment.toUserID = long(toUserID)
             
         comment.fromUserID = user.pk
@@ -86,27 +86,27 @@ def createComment(request):
             comment.save()
         except Exception,e:
             logger.error("Failed to save comments",e)
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20013_DB_EXCEPTION)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20013_DB_EXCEPTION)
         
         serializer = YYCommentInfoSerializer(comment)
         return Response(serializer.data,status=status.HTTP_200_OK)
         
     else:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
     return None
 
 @api_view(['POST'])
 def deleteComment(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     forms = CreateCommentForm(request.POST)
     if forms.is_valid():
         commentID = long(forms.cleaned_data['commentID'])
        
         comment = commentSvc.getCommentByID(commentID)
         if comment == None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         #targetStaff.deleteStatus = customSettings.INFO_DELETE_YES
         #targetStaff.save()
         comment.deleteStatus = customSettings.INFO_DELETE_YES
@@ -116,13 +116,13 @@ def deleteComment(request):
         return Response(serializer.data,status=status.HTTP_200_OK)  
         
     else:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
     
 @api_view(['POST'])
 def replyComment(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     
     
@@ -132,7 +132,7 @@ def replyComment(request):
 def showComments(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     form = ViewCommentForm(request.GET)
     if form.is_valid():
         pageCount = form.cleaned_data['pageCount']
@@ -150,6 +150,6 @@ def showComments(request):
         except EmptyPage:
             return HttpResponse("No Content",status=status.HTTP_204_NO_CONTENT)
     else:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
 
 

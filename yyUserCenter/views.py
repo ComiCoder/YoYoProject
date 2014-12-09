@@ -8,7 +8,7 @@ from weibo import APIClient
 from YoYoProject import customSettings
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
 from YoYoProject.errorResponse import ErrorResponse
-from yoyoUtil import yyErrorUtil
+from yoyoUtil import yyResponseUtil
 from yyMongoImgManager import imgService
 from yyMongoImgManager.models import YYImgInfo
 from yyUserCenter.auth import yyLogin, yyAuthenticateByID, \
@@ -145,7 +145,7 @@ def updateIcon(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     if request.FILES['userIcons'] ==None:
         return HttpResponse(content="no image upload", status=status.HTTP_400_BAD_REQUEST)
@@ -155,11 +155,11 @@ def updateIcon(request):
     try:
         imgPK =  imgService.uploadImg(request.FILES['userIcons'])
         if imgPK<0:
-            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20008_UPLOAD_EMPTY_IMG)
+            return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20008_UPLOAD_EMPTY_IMG)
         fromUser.iconID = imgPK
         
     except:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20009_UPLOAD_EXCEPTION)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20009_UPLOAD_EXCEPTION)
     
     fromUser.save()
     
@@ -171,10 +171,10 @@ def bindWithPhone(request):
     user =  yyGetUserFromRequest(request)
     
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     if user.phoneNum != None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20014_ALREADY_BIND_PHONE)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20014_ALREADY_BIND_PHONE)
     
     form = BindUserWithPhoneForm(request)
     
@@ -185,10 +185,10 @@ def bindWithPhone(request):
             user.save()
         except:
             logger.error("Failed to update userinfo")
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20013_DB_EXCEPTION)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20013_DB_EXCEPTION)
         
     else:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
         
     #return None
     

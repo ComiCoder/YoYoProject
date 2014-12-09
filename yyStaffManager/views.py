@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from YoYoProject.customSettings import USER_SESSION_KEY
-from YoYoProject.errorResponse import ErrorResponse
+from YoYoProject.customResponse import ErrorResponse
 from yoyoUtil import yoyoUtil
 from yyFriendshipManager.models import YYFriendShipInfo
 from yyImgManager.models import YYAlbumInfo, YYImageInfo, YYAlbum2Image
@@ -17,7 +17,7 @@ from yyStaffManager.models import YYStaffInfo, YYPostInfo
 from yyStaffManager.serializers import YYPaginatedPostInfoSerializer,YYPaginatedStaffInfoSerializer,\
     YYPostInfoSerializer, YYStaffInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
-from yoyoUtil import yyErrorUtil
+from yoyoUtil import yyResponseUtil
 from yyMongoImgManager import imgService
 from yyStaffManager import staffSvc
 import logging
@@ -114,7 +114,7 @@ def handleUploadFiles(request):
 def postStaff(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     postStaffForm = PostStaffForm(request.POST)
     
@@ -122,7 +122,7 @@ def postStaff(request):
     if postStaffForm.is_valid():
         albumInfo = handleUploadFiles(request)
         if albumInfo == None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20010_UPLOAD_ALBUM_EXCEPTION)   
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20010_UPLOAD_ALBUM_EXCEPTION)   
         else:
             #after save the image, then create a new staff and reference post info
             transaction.set_autocommit(False)
@@ -170,7 +170,7 @@ def postStaff(request):
 def staffList(request, format=None):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     viewUserStaffForms = ViewStaffListForm(request.GET)
     if viewUserStaffForms.is_valid():
@@ -202,27 +202,27 @@ def staffList(request, format=None):
 def staffDetail(request, format=None): 
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     viewUserStaffForms = ViewStaffDetailForm(request.GET)
     if viewUserStaffForms.is_valid():
         staffID = viewUserStaffForms.cleaned_data['staffID']
         
         staff = staffSvc.getStaffByID(int(staffID))
         if staff==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         
         staffSerializer = YYStaffInfoSerializer(staff)
         return Response(staffSerializer.data, status=status.HTTP_200_OK)
         
     else:
-        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
+        return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)    
     
 
 @api_view(['POST'])
 def staffEdit(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     editStaffForm = EditStaffForm(request.POST)
     if editStaffForm.is_valid():
@@ -230,7 +230,7 @@ def staffEdit(request):
         
         staff = staffSvc.getStaffByID(int(staffID))
         if staff==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         
         dealType = editStaffForm.clean_data['dealType']
         
@@ -244,7 +244,7 @@ def staffEdit(request):
         
         
         if dealType == YYStaffInfo.STAFF_DEAL_TYPE_TRADE and price== None:
-            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+            return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
         if price == None:
             price = 0.0
         postDesc = editStaffForm.clean_data['postDesc']
@@ -270,48 +270,48 @@ def staffEdit(request):
         return Response(staffSerializer.data, status=status.HTTP_200_OK)
         
     else:
-        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
    
 
 @api_view(['GET'])
 def staffDel(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     viewUserStaffForms = ViewStaffDetailForm(request.GET)
     if viewUserStaffForms.is_valid():
         staffID = viewUserStaffForms.cleaned_data['staffID']
         
         staff = staffSvc.getStaffByID(int(staffID))
         if staff==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         
         if staff.publisher.pk != user.pk:
-            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20012_NO_AUTHORITY)
+            return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20012_NO_AUTHORITY)
         staffSerializer = YYStaffInfoSerializer(staff)
         try:
             
             staff.delete()
         except Exception, e:
             logger.error("Failed to delete Staff, error %s" %e)
-            return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20013_DB_EXCEPTION)
+            return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20013_DB_EXCEPTION)
         
         return Response(staffSerializer.data, status=status.HTTP_200_OK)
         
     else:
-        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
+        return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)    
 
 @api_view(['POST'])
 def forwardStaff(request):
     user =  yyGetUserFromRequest(request)
     if user == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     forwardForms = ForwardStaffForm(request)
     if forwardForms.is_valid():
         staffID = forwardForms.cleaned_data['staffID']
         staff = staffSvc.getStaffByID(int(staffID))
         if staff==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20011_STAFF_NOT_EXIST)
         postStaff = YYPostInfo()
         postStaff.postStaff = staff
         postStaff.postUser = user
@@ -324,6 +324,6 @@ def forwardStaff(request):
             
         postStaff.save()
     else:
-        return ErrorResponse(request.path,yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)    
+        return ErrorResponse(request.path,yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)    
 
     

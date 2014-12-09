@@ -8,7 +8,7 @@ from yyFriendshipManager import friendshipSvc
 from yyFriendshipManager.models import YYFriendShipInfo
 from yyFriendshipManager.serializers import YYFriendshipInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
-from yoyoUtil import yyErrorUtil
+from yoyoUtil import yyResponseUtil
 from YoYoProject.errorResponse import ErrorResponse
 from yyUserCenter.serializers import YYUserInfoSerializer
 
@@ -24,7 +24,7 @@ def create(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
     
     createFriendshipForm = FriendshipForm(request.POST)
@@ -35,16 +35,16 @@ def create(request):
         toUserID = createFriendshipForm.cleaned_data['userID']
         
         if fromUserID == toUserID:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
             
         
         toUser = yyGetUserByID(int(toUserID))
         
         if toUser==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20003_USER_NOT_EXIST)
         
         if friendshipSvc.isFocusAlready(fromUserID, toUserID):
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20005)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20005)
         
         
         
@@ -57,7 +57,7 @@ def create(request):
         return Response(serializer.data,status=status.HTTP_200_OK)
         
     else:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
     
 @api_view(['POST'])
 def destroy(request):
@@ -65,7 +65,7 @@ def destroy(request):
     fromUser =  yyGetUserFromRequest(request)
     
     if fromUser == None:
-        return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20000_USER_NOT_LOGON)
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     createFriendshipForm = FriendshipForm(request.POST)
     
     if createFriendshipForm.is_valid():
@@ -73,23 +73,23 @@ def destroy(request):
         toUserID = createFriendshipForm.cleaned_data['userID']
         
         if fromUserID == toUserID:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20004_CANT_FOCUS_SELF)
     
         toUser = yyGetUserByID(int(toUserID))
         
         if toUser==None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20003_USER_NOT_EXIST)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20003_USER_NOT_EXIST)
         
         
         friendShip = friendshipSvc.getFriendShip(fromUserID, toUserID)
         if friendShip == None:
-            return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20007_CANT_UNFOCUS_STRANGER)
+            return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20007_CANT_UNFOCUS_STRANGER)
         else:
             friendShip.delete()
             userSerializer = YYUserInfoSerializer(toUser)
             return Response(userSerializer.data, status=status.HTTP_200_OK)
         
-    return ErrorResponse(request.path, yyErrorUtil.ERR_SVC_20006_FORMAT_ERROR)
+    return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
 
 
     

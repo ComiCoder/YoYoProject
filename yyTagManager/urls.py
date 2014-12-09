@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^createTag/$', views.createTag, name='createTag'),
+    url(r'^viewTag/$', views.viewTagList, name='viewTag'),
+    url(r'^refreshTag/$', views.refreshToMem, name='refreshTag'),
     
     #url(r'^postTimeLine/$',views.postTimeLine, name='postTimeLine'),
     

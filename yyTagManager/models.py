@@ -17,3 +17,6 @@ class YYTagInfo(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, null=True)
     updateTime = models.DateTimeField(auto_now=True, null=True)
     validTime = models.DateTimeField(null=True)
+    
+    class Meta:
+        db_table = 'yy_tag_info'
