@@ -9,7 +9,7 @@ from yyFriendshipManager.models import YYFriendShipInfo
 from yyFriendshipManager.serializers import YYFriendshipInfoSerializer
 from yyUserCenter.auth import yyGetUserFromRequest, yyGetUserByID
 from yoyoUtil import yyResponseUtil
-from YoYoProject.errorResponse import ErrorResponse
+from YoYoProject.customResponse import ErrorResponse
 from yyUserCenter.serializers import YYUserInfoSerializer
 
 

@@ -7,7 +7,7 @@ from weibo import APIClient
 
 from YoYoProject import customSettings
 from YoYoProject.customSettings import WEIBO_AUTH_TOKEN
-from YoYoProject.errorResponse import ErrorResponse
+from YoYoProject.customResponse import ErrorResponse
 from yoyoUtil import yyResponseUtil
 from yyMongoImgManager import imgService
 from yyMongoImgManager.models import YYImgInfo
