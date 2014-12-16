@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static "basic/basic.css" %}"/>
+		<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+		
+		<title>UEager CMS</title>
+	</head>
+	<body>
+		<div id = "header">
+			<h1>UEager CRM System</h1>
+		</div>
+		<div id = "navigation">
+			{%block navigation%}
+			{%endblock%}
+		</div>
+		<div id = "content" name="content">
+			{%block content%}
+			{%endblock%}
+		</div>
+	</body>
+</html>

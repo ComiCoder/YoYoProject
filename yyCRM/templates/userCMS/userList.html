@@ -1,0 +1,126 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+		<script type="text/javascript">
+		
+			function showUserList(pageIndex){
+					
+				
+			};
+			
+			function viewUser(obj)
+			{
+				var form = document.getElementById("userForm");
+				form.action = "/cms/user/viewUser";
+				//alert(obj.id);
+				$("#userID").val(obj.id);
+				
+				form.submit();
+			};
+	       
+   		</script >
+	</head>
+	<link rel="stylesheet" type="text/css" href="{% static "basic/basic.css" %}">
+	<h1 class='tableTitle'>用户管理</h1>
+	<div>
+		
+		<form id="userForm">
+			<input type="hidden" id="userID" name="userID"/>
+			<table class="CRM_Table">
+				<tr>
+					<th>USERID</th>
+					<th>UserName</th>
+					<th>PhoneNum</th>
+					<th>Address</th>
+					<th>Email</th>
+					<th>Desc</th>
+					<th>Address</th>
+					<th>Type</th>
+					<th>regProvince</th>
+					<th>regCity</th>
+					<th>deleteStatus</th>
+					<th>createTime</th>
+					<th>Operation</th>
+				</tr>
+				
+				<!-- 
+				 	phoneNum = models.CharField(verbose_name="phone number", max_length=32, null=True)
+				    password = models.CharField(verbose_name="password", max_length=128, null=True)
+				    nickName = models.CharField(verbose_name="nick name", max_length=32, null=True)
+				    iconID = models.CharField(max_length=30, null=True)
+				    gender = models.SmallIntegerField(choices = GENDER_CHOICES, default=GENDER_NULL)
+				    selfDesc = models.CharField(max_length=300,null=True)
+				    address = models.CharField(max_length=128, null=True)
+				    zipcode = models.CharField(max_length=32, null=True)
+				    email = models.EmailField(null=True)
+				    type = models.SmallIntegerField(choices=USER_TYPE_CHOICES,default=USER_TYPE_NORMAL)
+				    regProvince = models.SmallIntegerField(null=True)
+				    regCity=models.SmallIntegerField(null=True)
+				    authValue = models.SmallIntegerField(default=0)
+				    
+				    authWeiboID = models.CharField(max_length=20, null=True) #sina weibo id
+				    deleteStatus = models.SmallIntegerField(choices=customSettings.INFO_DELETE_CHOICES, default=customSettings.INFO_DELETE_NO)
+				    createTime = models.DateTimeField(auto_now_add=True)
+				    updateTime = models.DateTimeField(auto_now=True)
+				-->
+				
+		    
+		    		
+					
+				{% for item in userListPage.object_list %}
+					<tr>
+						<td>{{item.id}}</td>
+						<td>{{item.nickName}}</td>
+						<td>{{item.phoneNum}}</td>
+						<td>{{item.address}}</td>
+						<td>{{item.email}}</td>
+						<td style="word-break:break-all" width="300">{{item.selfDesc}}</td>
+						<td>{{item.address}}</td>
+						<td>
+							{% if item.type == 1 %}
+								普通用户
+							{% elif item.type == 2 %}
+								管理员
+							{% endif %}
+						</td>
+						<td>{{item.regProvince}}</td>
+						<td>{{item.regCity}}</td>
+						<td>{{item.deleteStatus}}</td>
+						<td>{{item.createTime}}</td>
+						<td >
+							<input id = {{item.id}} type="button" id="userManager" 
+								value="查看" onclick="viewUser(this)"> |
+							<input type="button" id="userManager" value="编辑"> |
+							<input type="button" id="userManager" value="删除"> 
+						</td>
+					</tr>
+				{% endfor %}
+				
+			</table>
+		
+		
+		</form>
+		
+	
+	
+		
+	
+	</div>
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if userListPage.has_previous %}
+	            <a href="/cms/user/userList?pageIndex={{ userListPage.previous_page_number }}">previous</a>
+	        {% endif %}
+	
+	        <span class="current">
+	            Page {{ userListPage.number }} of {{ userListPage.paginator.num_pages }}.
+	        </span>
+	
+	        {% if userListPage.has_next %}
+	            <a href="/cms/user/userList?pageIndex={{ userListPage.next_page_number }}">next</a>
+	            <p>next</p>
+	        {% endif %}
+	    </span>
+	</div>
+</html>

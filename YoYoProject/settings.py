@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 MEDIA_ROOT = 'G:/py_work_space/IMG_DATA/'
@@ -46,6 +47,7 @@ INSTALLED_APPS = (
     'yyFriendshipManager',
     'yyMongoImgManager',
     'yyTagManager',
+    'yyCRM',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,6 +58,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware', 
+
     #'django.middleware.transaction.TransactionMiddleware',
 )
 

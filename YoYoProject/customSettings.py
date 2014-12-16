@@ -24,3 +24,4 @@ INFO_DELETE_CHOICES = (
 
 YOYO_MONGO_DB = 'yoyo_mongo_db'
 
+GLOBAL_URL = 'http://localhost:8000'

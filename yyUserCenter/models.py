@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from YoYoProject import customSettings
+import yyMongoImgManager
 
 # Create your models here.
 class YYAccountInfo(models.Model):
@@ -60,7 +61,13 @@ class YYAccountInfo(models.Model):
                 return True
         return self.password == password
         '''
-    
+    def getIconURL(self):
+        if self.iconID:
+            url = yyMongoImgManager.imgService.getImgUrl(self.iconID)
+            print customSettings.GLOBAL_URL + url
+            return customSettings.GLOBAL_URL + url
+        return ""
+        
     class Meta:
         db_table = 'yy_account_info'
     

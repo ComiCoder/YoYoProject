@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^image/',include('yyMongoImgManager.urls')),
     url(r'^comments/',include('yyCommentCenter.urls')),
     url(r'^tag/',include('yyTagManager.urls')),
+    url(r'^cms/',include('yyCRM.urls')),
     
     
     

@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from YoYoProject.errorResponse import ErrorResponse
+from YoYoProject.customResponse import ErrorResponse
 from yoyoUtil import yyResponseUtil
 from yyCommentCenter.models import YYCommentInfo
 from yyCommentCenter.serializers import YYCommentInfoSerializer,\

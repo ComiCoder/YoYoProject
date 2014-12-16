@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static "basic/basic.css" %}">\
+		<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+		<script type="text/javascript">
+		
+			function showUser(){
+				//alert('test');
+				$.ajax({
+				  type: "GET",
+				  url: "/crm/user/userList",
+				  data:{    
+				             pageIndex : 1  
+				    },
+				  success: function(data) {
+				  		 
+				  },
+				  error:function(data){
+				  		
+				  }
+				});
+			};
+	       
+   		</script >
+   		
+   			
+		
+		<title>UEager CRM System</title>
+		
+	</head>
+	<body>
+		<div id = "header">
+			<h1>UEager CRM System</h1>
+		</div>
+		<div id = "navigation">
+			<ul>
+				<li><a href="javascripte:void(0);" onclick="showUser()">用户管理</a></li>
+				<li><a href="#pride">商品管理</a></li>
+			</ul>
+			
+		</div>
+		<div id = "content" name="content">
+		</div>
+		
+		
+		
+	</body>
+</html>

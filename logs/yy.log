@@ -495,3 +495,375 @@ Traceback (most recent call last):
   File "D:\Python27\lib\site-packages\redis\connection.py", line 574, in read_response
     raise response
 ResponseError: NOAUTH Authentication required.
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 98, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 343, in resolve
+    for pattern in self.url_patterns:
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 372, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 366, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Python27\lib\importlib\__init__.py", line 37, in import_module
+    __import__(name)
+  File "G:\py_work_space\YoYoProject\YoYoProject\urls.py", line 13, in <module>
+    url(r'^comments/',include('yyCommentCenter.urls')),
+  File "D:\Python27\lib\site-packages\django\conf\urls\__init__.py", line 28, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Python27\lib\importlib\__init__.py", line 37, in import_module
+    __import__(name)
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\urls.py", line 4, in <module>
+    from yyCommentCenter import views
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\views.py", line 10, in <module>
+    from YoYoProject.errorResponse import ErrorResponse
+ImportError: No module named errorResponse
+Internal Server Error: /crm/index
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 87, in get_response
+    response = middleware_method(request)
+  File "D:\Python27\lib\site-packages\django\middleware\common.py", line 72, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 619, in is_valid_path
+    resolve(path, urlconf)
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 494, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 343, in resolve
+    for pattern in self.url_patterns:
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 372, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Python27\lib\site-packages\django\core\urlresolvers.py", line 366, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Python27\lib\importlib\__init__.py", line 37, in import_module
+    __import__(name)
+  File "G:\py_work_space\YoYoProject\YoYoProject\urls.py", line 13, in <module>
+    url(r'^comments/',include('yyCommentCenter.urls')),
+  File "D:\Python27\lib\site-packages\django\conf\urls\__init__.py", line 28, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Python27\lib\importlib\__init__.py", line 37, in import_module
+    __import__(name)
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\urls.py", line 4, in <module>
+    from yyCommentCenter import views
+  File "G:\py_work_space\YoYoProject\yyCommentCenter\views.py", line 10, in <module>
+    from YoYoProject.errorResponse import ErrorResponse
+ImportError: No module named errorResponse
+Not Found: /user/userList/
+Not Found: /crm/user/userList/
+Not Found: /crm/user/userList/
+Not Found: /crm/user/userList/
+Not Found: /
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 21, in crmUserList
+    pageCount = form.cleaned_data['pageCount']
+KeyError: 'pageCount'
+Forbidden (CSRF token missing or incorrect.): /crm/user/userList/
+Forbidden (CSRF token missing or incorrect.): /crm/user/userList/
+Forbidden (CSRF token missing or incorrect.): /crm/user/userList/
+Forbidden (CSRF token missing or incorrect.): /crm/user/userList/
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /crm/user/userList/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Not Found: /crm/user/userList/
+Internal Server Error: /crm/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Not Found: /
+Internal Server Error: /crm/index/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 16, in crmIndex
+    return render(request, 'index/index.html')
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 174, in render_to_string
+    return t.render(context_instance)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 148, in render
+    return self._render(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\lib\site-packages\django\template\debug.py", line 80, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django\template\loader_tags.py", line 104, in render
+    compiled_parent = self.get_parent(context)
+  File "D:\Python27\lib\site-packages\django\template\loader_tags.py", line 101, in get_parent
+    return get_template(parent)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'static'
+Not Found: /crm/index/test
+Not Found: /user/userList/
+Not Found: /user/userList/
+Not Found: /crm/index/
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 24, in crmUserList
+    pageIndex = form.cleaned_data['pageIndex']
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 25, in crmUserList
+    if form.cleaned_data:
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 25, in crmUserList
+    if form.cleaned_data and form.cleaned_data.has_key('pageIndex'):
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Not Found: /crm/user/userList
+Not Found: /crm/user/userList
+Not Found: /crm/index/
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 25, in crmUserList
+    if form.cleaned_data and form.cleaned_data.has_key('pageIndex'):
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 28, in crmUserList
+    if form.cleaned_data and form.cleaned_data.has_key('pageIndex'):
+AttributeError: 'QueryUserForm' object has no attribute 'cleaned_data'
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 130, in get_response
+    % (callback.__module__, view_name))
+ValueError: The view yyCRM.views.crmUserList didn't return an HttpResponse object. It returned None instead.
+Not Found: /
+Internal Server Error: /cms/user/userList
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 65, in cmsUserList
+    return render(request, 'userCRM/userList.html', {'userListPage':userListPage})
+UnboundLocalError: local variable 'userListPage' referenced before assignment
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/viewUser.html',{'user':user})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 264, in parse
+    self.empty_variable(token)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 335, in empty_variable
+    raise self.error(token, "Empty variable tag")
+TemplateSyntaxError: Empty variable tag
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/viewUser.html',{'user':user})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 178, in render_to_string
+    return t.render(context_instance)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 148, in render
+    return self._render(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\lib\site-packages\django\template\debug.py", line 80, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django\template\debug.py", line 90, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 596, in resolve
+    obj = self.var.resolve(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 734, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 788, in _resolve_lookup
+    current = current()
+  File "G:\py_work_space\YoYoProject\yyUserCenter\models.py", line 65, in getIconURL
+    url = yyMongoImgManager.imgService.getImgUrl(self.iconID)
+  File "G:\py_work_space\YoYoProject\yyMongoImgManager\imgService.py", line 23, in getImgUrl
+    return "/image/getImg?imageID="+iconID
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /image/getImg
+Internal Server Error: /image/getImg/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "G:\py_work_space\YoYoProject\yyMongoImgManager\views.py", line 15, in getImage
+    imageInfo = YYImgInfo.objects.get(pk=imgID)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 186, in get
+    raise queryset._document.DoesNotExist(msg)
+DoesNotExist: YYImgInfo matching query does not exist.
+Internal Server Error: /image/getImg/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "G:\py_work_space\YoYoProject\yyMongoImgManager\views.py", line 15, in getImage
+    imageInfo = YYImgInfo.objects.get(pk=imgID)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 186, in get
+    raise queryset._document.DoesNotExist(msg)
+DoesNotExist: YYImgInfo matching query does not exist.
+Internal Server Error: /image/getImg/
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "G:\py_work_space\YoYoProject\yyMongoImgManager\views.py", line 15, in getImage
+    imageInfo = YYImgInfo.objects.get(pk=imgID)
+  File "D:\Python27\lib\site-packages\mongoengine\queryset\base.py", line 186, in get
+    raise queryset._document.DoesNotExist(msg)
+DoesNotExist: YYImgInfo matching query does not exist.
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url
+Not Found: /cms/user/url

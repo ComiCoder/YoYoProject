@@ -18,3 +18,6 @@ def uploadImg(object):
     except:
         logger.error('Failed to upload image')
         return -1
+    
+def getImgUrl(iconID):
+    return "/image/getImg?imageID="+iconID
