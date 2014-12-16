@@ -28,9 +28,9 @@ def cmsViewUser(request):
         userID = long(userID)
         user = YYAccountInfo.objects.get(pk = userID)
         if user == None:
-            return render(request, 'errMsg/errMsg.html',{'errMsg':"format error!"})
+            return render(request, 'errMsg/errMsg.html',{'errMsg':"User Can't be found!"})
         else:
-            return render(request, 'userCMS/viewUser.html',{'user':user})
+            return render(request, 'userCMS/userDetail.html',{'user':user,'isEdit':False})
     else:
        return render(request, 'errMsg/errMsg.html', {'errMsg':"format error!"})
 

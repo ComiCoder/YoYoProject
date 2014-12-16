@@ -107,3 +107,8 @@ table.CRM_Table td {
 	margin-top: 0.5em;
 	margin-left:5em;
 }
+
+#cmsDetail textarea {
+	margin-top: 0.5em;
+	margin-left:5em;
+}

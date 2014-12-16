@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 from YoYoProject import customSettings
@@ -67,6 +69,14 @@ class YYAccountInfo(models.Model):
             print customSettings.GLOBAL_URL + url
             return customSettings.GLOBAL_URL + url
         return ""
+    
+    def getGender(self):
+        if self.gender:
+            if self.gender==YYAccountInfo.GENDER_MALE:
+                return "男"
+            elif self.gender==YYAccountInfo.GENDER_MALE:
+                return "女"
+        return "-"
         
     class Meta:
         db_table = 'yy_account_info'

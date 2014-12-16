@@ -867,3 +867,311 @@ Not Found: /cms/user/url
 Not Found: /cms/user/url
 Not Found: /cms/user/url
 Not Found: /cms/user/url
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/viewUser.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 136, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: userCMS/viewUser.html
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user, 'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user,'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 344, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+TemplateSyntaxError: Invalid block tag: 'endif'
+Internal Server Error: /cms/user/viewUser
+Traceback (most recent call last):
+  File "D:\Python27\lib\site-packages\django\core\handlers\base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Python27\lib\site-packages\django\views\decorators\csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "G:\py_work_space\YoYoProject\yyCRM\views.py", line 33, in cmsViewUser
+    return render(request, 'userCMS/userDetail.html',{'user':user,'isEdit':False})
+  File "D:\Python27\lib\site-packages\django\shortcuts.py", line 48, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "D:\Python27\lib\site-packages\django\template\loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 162, in compile_string
+    return parser.parse()
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Python27\lib\site-packages\django\template\defaulttags.py", line 974, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\Python27\lib\site-packages\django\template\defaulttags.py", line 906, in __init__
+    super(TemplateIfParser, self).__init__(*args, **kwargs)
+  File "D:\Python27\lib\site-packages\django\template\smartif.py", line 164, in __init__
+    mapped_tokens.append(self.translate_token(token))
+  File "D:\Python27\lib\site-packages\django\template\smartif.py", line 175, in translate_token
+    return self.create_var(token)
+  File "D:\Python27\lib\site-packages\django\template\defaulttags.py", line 909, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\Python27\lib\site-packages\django\template\base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+TemplateSyntaxError: Could not parse the remainder: '==False' from 'isEdit==False'

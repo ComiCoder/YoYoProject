@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static "basic/basic.css" %}"/>
+		<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+		<script type="text/javascript">
+			function toEdit()
+			{
+				
+				//only the username and userdesc can be edit by Admin;
+				
+        		document.getElementById("editButton").hidden=true;
+			}
+   		</script >
+	</head>
+	<link rel="stylesheet" type="text/css" href="{% static "basic/basic.css" %}">
+	<h1 id='tableTitle'>用户信息</h1>
+	<div id="cmsDetail" width="300px" height="500px" margin>
+		<input type="button" id="editButton"
+			{% if isEdit %}
+				hidden="hidden"
+			{% endif %}
+		value="Edit" onclick="toEdit()"
+		/><br/><br/>
+		<img src="{{user.getIconURL}}" name="userIcon" width="200px" height="200px"/><br/>
+		userID：    <input type="text" disabled="disabled" name="userID" value="{{user.id}}"/> <br/>
+		userName:<input type="text" disabled="disabled" name="userName" value="{{user.nickName}}"/> <br/>
+		phoneNum:<input type="text" disabled="disabled" name="phoneNum" value="{{user.phoneNum}}"/> <br/>
+		gender:  <input type="text" disabled="disabled" name="gender" 
+			value="{{user.getGender}}"/> <br/>
+		desc:    <textarea rows="5" cols="50" disabled="disabled" >
+			{{user.selfDesc}}
+		</textarea> <br/>
+		
+		
+		address: <input type="text" disabled="disabled" name="address" value="{{user.address}}"/> <br/>
+		zipcode: <input type="text" disabled="disabled" name="zipcode" value="{{user.zipcode}}"/> <br/>
+		email: <input type="text" disabled="disabled" name="email" value="{{user.email}}"/> <br/>
+		type: <input type="text" disabled="disabled" name="type" value="{{user.type}}"/> <br/>
+		regProvince: <input type="text" disabled="disabled" name="regProvince" value="{{user.regProvince}}"/> <br/>
+		regCity: <input type="text" disabled="disabled" name="regCity" value="{{user.regCity}}"/> <br/>
+		authValue: <input type="text" disabled="disabled" name="authValue" value="{{user.authValue}}"/> <br/>
+		authWeiboID: <input type="text" disabled="disabled" name="authWeiboID" value="{{user.authWeiboID}}"/> <br/>
+		deleteStatus: <input type="text" disabled="disabled" name="deleteStatus" value="{{user.deleteStatus}}"/> <br/>
+		createTime: <input type="text" disabled="disabled" name="createTime" value="{{user.createTime}}"/> <br/>
+		updateTime: <input type="text" disabled="disabled" name="updateTime" value="{{user.updateTime}}"/> <br/>
+		
+	</div>
+	
+	
+	
+	
+</html>
