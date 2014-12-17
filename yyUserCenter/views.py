@@ -17,6 +17,7 @@ from yyUserCenter.auth import yyLogin, yyAuthenticateByID, \
 from yyUserCenter.models import YYAccountInfo
 from yyUserCenter.serializers import YYUserInfoSerializer
 import logging
+from virtualenv import REQUIRED_FILES
 
 
 APP_KEY = '3920803036' # app key  
@@ -34,6 +35,14 @@ logger = logging.getLogger('yyUserCenter.views')
 
 class BindUserWithPhoneForm(forms.Form):
     phoneNum = forms.CharField(max_length=20,required=True)
+    
+class AuthUserForm(forms.Form):
+    type = forms.IntegerField(min_value=customSettings.USER_CERTIFICATION_TYPE_IDENTITY, 
+                              max_value=customSettings.USER_CERTIFICATION_TYPE_IDENTITY, 
+                              required=True)
+    userID = forms.IntegerField(required=True)
+    otherID = forms.CharField(max_length=30, required=False) #OTHER SNS ID, such as weibo or wechat
+    
 
 def lookUserBySinaID(sinaID):
     authWeiboID = customSettings.WEIBO_ID_PREFIX + sinaID
@@ -191,7 +200,15 @@ def bindWithPhone(request):
         return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20006_FORMAT_ERROR)
         
     #return None
+@api_view(['POST'])
+def userAuth(request):
+    user =  yyGetUserFromRequest(request)
+    if user == None:
+        return ErrorResponse(request.path, yyResponseUtil.ERR_SVC_20000_USER_NOT_LOGON)
     
+    
+    pass
+  
 def queryUserByPhone(phoneNum):
     userInfoSet = YYAccountInfo.objects.filter(phoneNum=phoneNum)
     if userInfoSet == None or userInfoSet.count() == 0:

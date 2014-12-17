@@ -80,5 +80,24 @@ class YYAccountInfo(models.Model):
         
     class Meta:
         db_table = 'yy_account_info'
+        
+        
+class YYUserCertificationInfo(models.Model):
     
+    STATUS_PENDDING = 1
+    STATUS_DENIED = 2
+    STATUS_APPROVED = 3
+    
+    STATUS_CHOICES = (
+        (STATUS_PENDDING,'pending'),
+        (STATUS_DENIED,'denied'),
+        (STATUS_APPROVED,'approved'),
+    )
+    
+    fromUser = models.ForeignKey(YYAccountInfo, null=False, related_name='fromUserID')
+    identityImgID = models.CharField(max_length=30, null=True)
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDDING)
+    operationUser = models.ForeignKey(YYAccountInfo, null=True, related_name='operationUserID')
+    createTime = models.DateTimeField(auto_now_add=True)
+    updateTime = models.DateTimeField(auto_now=True)
     

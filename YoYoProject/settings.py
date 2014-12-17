@@ -7,7 +7,8 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
-
+#-*- coding:utf-8 -*-
+ 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -101,7 +102,14 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR + '/logs/','yy.log'),
         },
     },
-           
+    'default': {
+        'level':'DEBUG',
+        'class':'logging.handlers.RotatingFileHandler',
+         'filename': os.path.join(BASE_DIR+'/logs/','yy.log'),  
+        'maxBytes': 1024*1024*5,                  
+        'backupCount': 5,                         
+        'formatter':'standard',                  
+    },       
     
     'loggers': {
         'django.request': {
