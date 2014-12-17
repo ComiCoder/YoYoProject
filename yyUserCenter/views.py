@@ -38,7 +38,7 @@ class BindUserWithPhoneForm(forms.Form):
     
 class AuthUserForm(forms.Form):
     type = forms.IntegerField(min_value=customSettings.USER_CERTIFICATION_TYPE_IDENTITY, 
-                              max_value=customSettings.USER_CERTIFICATION_TYPE_IDENTITY, 
+                              max_value=customSettings.USER_CERTIFICATION_TYPE_WECHAT, 
                               required=True)
     userID = forms.IntegerField(required=True)
     otherID = forms.CharField(max_length=30, required=False) #OTHER SNS ID, such as weibo or wechat
